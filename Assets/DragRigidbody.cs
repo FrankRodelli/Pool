@@ -23,7 +23,6 @@ namespace UnityStandardAssets.Utility
 
 			if (transform.position.x < -10 || transform.position.x > 10) {
 				transform.position = startPos;
-				print ("Niggers!");
 			}
 
             // Make sure the user pressed the mouse down
