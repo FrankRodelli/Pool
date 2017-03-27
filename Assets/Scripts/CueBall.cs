@@ -15,6 +15,8 @@ public class CueBall : MonoBehaviour {
 		initPosition = transform.position;
 
         rb = GetComponent<Rigidbody>();
+
+        Cursor.visible = false;
 	
 	}
 	
@@ -56,7 +58,7 @@ public class CueBall : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             rb.AddForce((trajectory.transform.position - transform.position) * thrust * multiplier);
-            Destroy(trajectory);
+            
         }
 
     }
