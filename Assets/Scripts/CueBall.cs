@@ -69,9 +69,14 @@ public class CueBall : MonoBehaviour {
         //Applies force when mouseup left click is detected
         if (Input.GetMouseButtonUp(0))
         {
-            isDown = false;
-            rb.AddForce((trajectory.transform.position - transform.position) * thrust * multiplier);
-            multiplier = 0;
+            //Only allows force to be added if ball is not moving
+            if (!GameObject.Find("trajectory").GetComponent<Trajectory>().isMoving)
+            {
+                isDown = false;
+                rb.AddForce((trajectory.transform.position - transform.position) * thrust * multiplier);
+                multiplier = 0;
+            }
+
         }
     }
 }

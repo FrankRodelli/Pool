@@ -32,7 +32,7 @@ public class Trajectory : MonoBehaviour
         //Adds 1 for time update is called
         framecount++;
 
-        if(framecount == 2)
+        if(framecount == 5)
         {
             //Calls isMovingTest method
             isMovingTest();
@@ -65,13 +65,13 @@ public class Trajectory : MonoBehaviour
         //Sets change in translation if change was less than 0 
         if (xAxis > 0)
         {
-            transform.RotateAround(target.position, Vector3.down, velocity / 5);
+            transform.RotateAround(target.position, Vector3.down, velocity / 4);
         }
 
         //Sets change in translation if change was more than 0
         if (xAxis < 0)
         {
-            transform.RotateAround(target.position, Vector3.up, velocity / 5);
+            transform.RotateAround(target.position, Vector3.up, velocity / 4);
         }
 
         //Reset relative position
@@ -85,10 +85,8 @@ public class Trajectory : MonoBehaviour
 
         Vector3 posChange = lastPos - objectVector3;
 
-        print(posChange);
-
         //Tests change in current vs last pos
-        if (posChange == Vector3.zero)
+        if (posChange/10 == Vector3.zero/10)
         {
             isMoving = false;
         }

@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class FreeMode : MonoBehaviour {
 
-    public GameObject[] balls;
+    public GameObject[] ball;
     public int numberOfBalls;
+    public bool isGameOver = false;
 
 	// Use this for initialization
 	void Start () {
-        balls = GameObject.FindGameObjectsWithTag("PlayBall");
 
-        for (int i = 0; i < balls.Length; i++)
-        {
-            numberOfBalls++;
-        }
+        //Sets balls to gameobject array
+        ball = GameObject.FindGameObjectsWithTag("PlayBall");
+
+        //Gets number of balls from array
+        numberOfBalls = ball.Length;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        print(balls[0]);
+
+        if(numberOfBalls == 0)
+        {
+            Application.LoadLevel("PoolTable");
+        }
 
 	}
 }
