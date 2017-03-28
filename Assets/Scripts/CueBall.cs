@@ -23,15 +23,34 @@ public class CueBall : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//Resets ball to initial location of it goes into a pocket 
-		var ballPositionX = transform.position.x;
-		var ballPositionZ = transform.position.z;
-		if (ballPositionX > 3.80 || ballPositionX < -3.80) {
-			transform.position = initPosition;
-			print ("Ball Reset");
-		
-		}
+        //Calls addPower method
+        addPower();
+        var ballPositionX = transform.position.x;
+        var ballPositionZ = transform.position.z;
 
+        if (ballPositionX > 3.80 || ballPositionX < -3.80)
+        {
+            transform.position = initPosition;
+            print("Ball Reset");
+        }
+    }
+
+    //Sets multiplier variable based on mouse movement
+    void Multiplier()
+    {
+        multiplier = multiplier + Input.GetAxis("Mouse Y");
+
+        //Resets multipler so it can't be negative
+        if (multiplier < 0)
+        {
+            multiplier = 0;
+        }
+
+        //Need to add logic to not allow over a certain power
+    }
+
+    void addPower()
+    {
         //Gets trajectory game object
         GameObject trajectory = GameObject.Find("trajectory");
 
@@ -41,32 +60,18 @@ public class CueBall : MonoBehaviour {
             isDown = true;
         }
 
-        //Determines whether mouse is up or down 
-        //And sets bool accordingly
-        if (Input.GetMouseButtonUp(0))
-        {
-            isDown = false;
-        }
-
         //If isdown, executes multiplier method
         if (isDown)
         {
             Multiplier();
         }
-       
+
         //Applies force when mouseup left click is detected
         if (Input.GetMouseButtonUp(0))
         {
+            isDown = false;
             rb.AddForce((trajectory.transform.position - transform.position) * thrust * multiplier);
-            
+            multiplier = 0;
         }
-
-    }
-
-    //Sets multiplier variable based on mouse movement
-    void Multiplier()
-    {
-        multiplier = multiplier + Input.GetAxis("Mouse Y");
-        print(multiplier);
     }
 }
