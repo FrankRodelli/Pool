@@ -49,6 +49,10 @@ public class Trajectory : MonoBehaviour
         //Updates transform based on cueball location
         transform.position = (target.position + relativeDistance);
 
+
+        //Working on this to reset position
+        //transform.position = new Vector3(transform.position.x, transform.position.y, (GameObject.Find("raycast").GetComponent<RayCast>().theDistance / 2));
+
         //Sets velocity based on whether mouse button is down or not
         if (isDown)
         {

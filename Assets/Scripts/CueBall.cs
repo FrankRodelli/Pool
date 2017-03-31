@@ -8,6 +8,7 @@ public class CueBall : MonoBehaviour {
     public float thrust;
     public float multiplier;
     public bool isDown = false;
+    public GameObject target;
 
 	// Use this for initialization
 	void Start () {
@@ -51,9 +52,6 @@ public class CueBall : MonoBehaviour {
 
     void addPower()
     {
-        //Gets trajectory game object
-        GameObject trajectory = GameObject.Find("trajectory");
-
         //Sets velocity based on mouse movement
         if (Input.GetMouseButtonDown(0))
         {
@@ -70,10 +68,10 @@ public class CueBall : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             //Only allows force to be added if ball is not moving
-            if (!GameObject.Find("trajectory").GetComponent<Trajectory>().isMoving)
+            if (!target.GetComponent<Trajectory>().isMoving)
             {
                 isDown = false;
-                rb.AddForce((trajectory.transform.position - transform.position) * thrust * multiplier);
+                rb.AddForce((target.transform.position - transform.position) * thrust * multiplier);
                 multiplier = 0;
             }
 
