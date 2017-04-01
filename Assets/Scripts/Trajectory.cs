@@ -27,12 +27,16 @@ public class Trajectory : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void LateUpdate()
+    {
         isMouseDown();
 
         //Adds 1 for time update is called
         framecount++;
 
-        if(framecount == 5)
+        if (framecount == 5)
         {
             //Calls isMovingTest method
             isMovingTest();

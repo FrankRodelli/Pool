@@ -23,7 +23,7 @@ public class RayCast : MonoBehaviour {
         if (Physics.Raycast(transform.position,(forward),out hit))
         {
             theDistance = hit.distance;
-            print(theDistance + " " + hit.collider.gameObject.name);
+            //print(theDistance + " " + hit.collider.gameObject.name);
 
             Vector3 initPosition = target.transform.position;
 

@@ -24,6 +24,11 @@ public class CueBall : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+
+    }
+
+    private void LateUpdate()
+    {
         //Calls addPower method
         addPower();
         var ballPositionX = transform.position.x;
