@@ -15,8 +15,8 @@ public class CueStick : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    
-	}
+        print(transform.position);
+    }
 
     private void LateUpdate()
     {
@@ -32,13 +32,15 @@ public class CueStick : MonoBehaviour {
         }
 
         MoveCueStick();
+       // MoveWithPower();
     }
 
     void MoveCueStick()
     {
+        float power = GameObject.Find("cueball").GetComponent<CueBall>().multiplier;
         //Updates transform based on cueball location
         transform.position = (target.transform.position + relativeDistance);
-        transform.position = new Vector3(transform.position.x, transform.position.y,transform.position.z +.94f);
+        transform.position = new Vector3(transform.position.x, transform.position.y,transform.position.z +.94f + power/4);
 
         //Sets velocity based on whether mouse button is down or not
         if (GameObject.Find("traj").GetComponent<Trajectory>().isDown)
@@ -67,6 +69,6 @@ public class CueStick : MonoBehaviour {
 
         //Reset relative position
         relativeDistance = transform.position - target.transform.position;
-        relativeDistance = new Vector3(relativeDistance.x, relativeDistance.y, relativeDistance.z - .94f);
+        relativeDistance = new Vector3(relativeDistance.x, relativeDistance.y, relativeDistance.z - .94f - power/4);
     }
 }

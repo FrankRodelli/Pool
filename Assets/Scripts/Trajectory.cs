@@ -52,7 +52,7 @@ public class Trajectory : MonoBehaviour
     {
         //Updates transform based on cueball location
         transform.position = (target.position + relativeDistance);
-
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.09f);
 
         //Working on this to reset position
         //transform.position = new Vector3(transform.position.x, transform.position.y, (GameObject.Find("raycast").GetComponent<RayCast>().theDistance / 2));
@@ -84,6 +84,7 @@ public class Trajectory : MonoBehaviour
 
         //Reset relative position
         relativeDistance = transform.position - target.position;
+        relativeDistance = new Vector3(relativeDistance.x, relativeDistance.y, relativeDistance.z + 0.09f);
     }
 
     void isMovingTest()

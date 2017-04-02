@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class Menu : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-        
-	}
+    NetworkManagerHUD hudManager;
+    // Use this for initialization
+    void Start () {
+        hudManager = GameObject.Find("server").GetComponent<NetworkManagerHUD>();
+        hudManager.showGUI = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -32,6 +34,12 @@ public class Menu : MonoBehaviour {
 
     public void multiplayer()
     {
-
+        if(hudManager.showGUI == true)
+        {
+            hudManager.showGUI = false;
+        }
+        else {
+            hudManager.showGUI = true;
+        }
     }
 }
