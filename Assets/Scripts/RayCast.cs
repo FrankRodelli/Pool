@@ -6,6 +6,8 @@ public class RayCast : MonoBehaviour {
 
     public float theDistance;
     public GameObject target;
+    public Ray ray;
+    public RaycastHit hit;
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +16,6 @@ public class RayCast : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RaycastHit hit;
 
         //Debug raycast so we can see it in the editor
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
@@ -28,8 +29,6 @@ public class RayCast : MonoBehaviour {
             Vector3 initPosition = target.transform.position;
 
             target.transform.localScale = new Vector3(0.05f, 0.05f, theDistance/70);
-
-            //Note for last publish
 
 
         }

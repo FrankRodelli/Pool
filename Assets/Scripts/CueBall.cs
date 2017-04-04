@@ -3,20 +3,18 @@ using System.Collections;
 
 public class CueBall : MonoBehaviour {
 
-	Vector3 initPosition;
     public Rigidbody rb;
     public float thrust;
     public float multiplier;
     public bool isDown = false;
     public GameObject target;
+    public AudioSource breakSound;
+    public GameObject scripts;
 
-	// Use this for initialization
-	void Start () {
-
-		initPosition = transform.position;
+    // Use this for initialization
+    void Start () {
 
         rb = GetComponent<Rigidbody>();
-
         Cursor.visible = false;
 	
 	}
@@ -24,20 +22,17 @@ public class CueBall : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
     }
 
     private void LateUpdate()
     {
         //Calls addPower method
-        addPower();
-        var ballPositionX = transform.position.x;
-        var ballPositionZ = transform.position.z;
-
-        if (ballPositionX > 3.80 || ballPositionX < -3.80)
+        if (scripts.GetComponent<PauseMenuTrigger>().isPaused)
         {
-            transform.position = initPosition;
-            print("Ball Reset");
+            //print("no move");
+        }
+        else {
+            addPower();
         }
     }
 
@@ -76,8 +71,9 @@ public class CueBall : MonoBehaviour {
             if (!target.GetComponent<Trajectory>().isMoving)
             {
                 isDown = false;
-                rb.AddForce((target.transform.position - transform.position) * thrust * multiplier);
+                rb.AddForce((target.transform.position - transform.position) * thrust * multiplier/4);
                 multiplier = 0;
+                breakSound.Play();
             }
 
         }

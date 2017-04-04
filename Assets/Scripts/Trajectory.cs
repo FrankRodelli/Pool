@@ -9,17 +9,16 @@ public class Trajectory : MonoBehaviour
     public bool isDown;
     public bool isMoving = false;
     public int framecount = 0;
-    Vector3 initPosition;
+    public GameObject PM;
     public Transform target;
     public Vector3 relativeDistance = Vector3.zero;
     public Vector3 lastPos = Vector3.zero;
+    public GameObject scripts;
 
     // Use this for initialization
     void Start()
     {
-        //Stores initial trajectory position
-        initPosition = transform.position;
-
+        //Sets relative distance
         relativeDistance = transform.position - target.position;
     }
 
@@ -28,24 +27,26 @@ public class Trajectory : MonoBehaviour
     {
 
     }
-
     private void LateUpdate()
     {
-        isMouseDown();
-
-        //Adds 1 for time update is called
-        framecount++;
-
-        if (framecount == 5)
+        if (!scripts.GetComponent<PauseMenuTrigger>().isPaused)
         {
-            //Calls isMovingTest method
-            isMovingTest();
+            isMouseDown();
 
-            //Resets framcount
-            framecount = 0;
+            //Adds 1 for time update is called
+            framecount++;
+
+            if (framecount == 5)
+            {
+                //Calls isMovingTest method
+                isMovingTest();
+
+                //Resets framcount
+                framecount = 0;
+            }
+            //Calls movetrajectory method
+            moveTrajectory();
         }
-        //Calls movetrajectory method
-        moveTrajectory();
     }
 
     void moveTrajectory()
@@ -73,13 +74,13 @@ public class Trajectory : MonoBehaviour
         //Sets change in translation if change was less than 0 
         if (xAxis > 0)
         {
-            transform.RotateAround(target.position, Vector3.down, velocity / 4);
+            transform.RotateAround(target.position, Vector3.down, velocity / 6);
         }
 
         //Sets change in translation if change was more than 0
         if (xAxis < 0)
         {
-            transform.RotateAround(target.position, Vector3.up, velocity / 4);
+            transform.RotateAround(target.position, Vector3.up, velocity / 6);
         }
 
         //Reset relative position

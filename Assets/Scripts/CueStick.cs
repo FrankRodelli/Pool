@@ -8,14 +8,15 @@ public class CueStick : MonoBehaviour {
     public Vector3 relativeDistance = new Vector3(0,0,.94f);
     public int velocity;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        print(transform.position);
+
+
     }
 
     private void LateUpdate()
@@ -30,9 +31,9 @@ public class CueStick : MonoBehaviour {
         {
             GetComponent<Renderer>().enabled = true;
         }
-
+        
         MoveCueStick();
-       // MoveWithPower();
+        
     }
 
     void MoveCueStick()
@@ -40,7 +41,7 @@ public class CueStick : MonoBehaviour {
         float power = GameObject.Find("cueball").GetComponent<CueBall>().multiplier;
         //Updates transform based on cueball location
         transform.position = (target.transform.position + relativeDistance);
-        transform.position = new Vector3(transform.position.x, transform.position.y,transform.position.z +.94f + power/4);
+        transform.position = new Vector3(transform.position.x, transform.position.y,transform.position.z +.94f + power/6);
 
         //Sets velocity based on whether mouse button is down or not
         if (GameObject.Find("traj").GetComponent<Trajectory>().isDown)
@@ -58,17 +59,17 @@ public class CueStick : MonoBehaviour {
         //Sets change in translation if change was less than 0 
         if (xAxis > 0)
         {
-            transform.RotateAround(target.transform.position, Vector3.down, velocity / 4);
+            transform.RotateAround(target.transform.position, Vector3.down, velocity / 6);
         }
 
         //Sets change in translation if change was more than 0
         if (xAxis < 0)
         {
-            transform.RotateAround(target.transform.position, Vector3.up, velocity / 4);
+            transform.RotateAround(target.transform.position, Vector3.up, velocity / 6);
         }
 
         //Reset relative position
         relativeDistance = transform.position - target.transform.position;
-        relativeDistance = new Vector3(relativeDistance.x, relativeDistance.y, relativeDistance.z - .94f - power/4);
+        relativeDistance = new Vector3(relativeDistance.x, relativeDistance.y, relativeDistance.z - .94f - power/6);
     }
 }
