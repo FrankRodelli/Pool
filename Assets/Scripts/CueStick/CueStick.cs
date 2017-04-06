@@ -14,6 +14,7 @@ public class CueStick : MonoBehaviour {
 	
 
 	private float _pullDist;
+	private float _distAtRelease;
 	private float _cachedPullTime;
 	private float _cachedReleaseTime;
 
@@ -53,9 +54,12 @@ public class CueStick : MonoBehaviour {
 		if (InputManager.Instance.TriggerDown){
 			PullCue();
 			_cachedReleaseTime = 0;
-		} else if (_pullDist > 0){
-			ReleaseCue();
+		} else if (InputManager.Instance.OnTriggerUp){
+			_distAtRelease = _pullDist;
 			_cachedPullTime = 0;
+			ReleaseCue();
+		} else {
+			ReleaseCue();
 		}
 
 		Vector3 pos = _baseCueOffset;
@@ -72,8 +76,9 @@ public class CueStick : MonoBehaviour {
 
 	void ReleaseCue(){
 		_cachedReleaseTime += Time.deltaTime/_releaseTimeScalar;
-		float releaseValue = _releaseCurve.Evaluate(_cachedReleaseTime);
-		_pullDist = Mathf.Lerp(_pullDist,0,releaseValue); 
+		float releaseValue = _releaseCurve.Evaluate(_cachedReleaseTime)*_distAtRelease;
+		//_pullDist = Mathf.Lerp(_pullDist,0,releaseValue); 
+		_pullDist = releaseValue;
 	}
 
 }

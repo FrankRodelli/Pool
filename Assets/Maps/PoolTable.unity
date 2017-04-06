@@ -1716,8 +1716,8 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.60850483
-      value: 0.38851768
+      time: 0.6468044
+      value: 0.5738509
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1737,25 +1737,31 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 1
-      inSlope: -1.0833338
-      outSlope: -1.4180279
-      tangentMode: 69
+      inSlope: -6.158421
+      outSlope: -6.158421
+      tangentMode: 0
     - serializedVersion: 2
-      time: 0.8669877
-      value: -0.22941276
+      time: 0.29890573
+      value: -0.49532714
+      inSlope: -3.4317267
+      outSlope: -0.06521694
+      tangentMode: 1
+    - serializedVersion: 2
+      time: 0.80894256
+      value: -0.4974146
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
       time: 0.99583334
       value: 0.0062500834
-      inSlope: 1.8290325
-      outSlope: 0
-      tangentMode: 69
+      inSlope: 2.6547682
+      outSlope: 2.6547682
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  _releaseTimeScalar: 1
+  _releaseTimeScalar: 0.25
 --- !u!4 &1180147499 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: e3fe4eea31880864283bb5cd1f7c7207, type: 3}
