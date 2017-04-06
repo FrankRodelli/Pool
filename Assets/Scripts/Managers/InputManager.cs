@@ -8,6 +8,7 @@ public class InputManager : Singleton<InputManager> {
 
 	public Vector3 MarkerPosition { get; private set;}
 
+	public float TriggerDownLength{get; private set;}
 	public bool TriggerDown { get; private set;}
 	public bool OnTriggerUp { get; private set;}
 	public bool OnTriggerDown { get; private set;}
@@ -22,6 +23,12 @@ public class InputManager : Singleton<InputManager> {
 		TriggerDown = Input.GetMouseButton(0) | Input.GetKey(KeyCode.Space);
 		OnTriggerUp = Input.GetMouseButtonUp(0) | Input.GetKey(KeyCode.Space);
 		OnTriggerDown = Input.GetMouseButtonDown(0) | Input.GetKey(KeyCode.Space);
+
+		if (TriggerDown){
+			TriggerDownLength += Time.deltaTime;
+		} else {
+			TriggerDownLength = 0;
+		}
 
 		Camera cam = Camera.main;
 		RaycastHit hit;

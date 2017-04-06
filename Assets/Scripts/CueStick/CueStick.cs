@@ -5,20 +5,36 @@ using UnityEngine;
 public class CueStick : MonoBehaviour {
 
 	[SerializeField] private Ball _cueBall;
+	[SerializeField] private float _maxPullDist = 1;
+	[SerializeField] private AnimationCurve _pullCurve;
+	[SerializeField] private float _pullTimeScalar = 1;
+	[SerializeField] private AnimationCurve _releaseCurve;
+	[SerializeField] private float _releaseTimeScalar = 1;
+
 	
-	// Use this for initialization
+
+	private float _pullDist;
+	private float _cachedPullTime;
+	private float _cachedReleaseTime;
+
+	private Vector3 _baseCueOffset;
+	private Transform _cue;
+
 	void Start () {
-		MoveToCueBall();
+       	_cue = transform.Find("MeshObject");
+       	_baseCueOffset = _cue.transform.localPosition;
+
+       	MoveToCueBall();
 		RotateAroundCueBall();
-        
     }
-	
-	// Update is called once per frame
+
 	void Update () {
 		if (_cueBall.Velocity.magnitude == 0) {
             MoveToCueBall();
 			RotateAroundCueBall();
 		}
+		SetCuePosition();
+
 	}
 
 	void MoveToCueBall(){
@@ -28,9 +44,36 @@ public class CueStick : MonoBehaviour {
 	void RotateAroundCueBall(){
 		Vector2 cueballKey = _cueBall.Position.xz(); // see the Vector3Extensions.cs class to know what .xz() does 
 		Vector2 markerKey = InputManager.Instance.MarkerPosition.xz();
-
 		Vector3 delta = (markerKey - cueballKey).normalized.x_y(0); // see the Vector2Extensions.cs class to know what .x_y() does 
-
 		transform.forward = delta;
 	}
+
+	void SetCuePosition(){
+
+		if (InputManager.Instance.TriggerDown){
+			PullCue();
+			_cachedReleaseTime = 0;
+		} else if (_pullDist > 0){
+			ReleaseCue();
+			_cachedPullTime = 0;
+		}
+
+		Vector3 pos = _baseCueOffset;
+		pos.z += _pullDist* -_maxPullDist;
+		_cue.localPosition = pos;
+
+	}
+
+	void PullCue(){
+		_cachedPullTime += Time.deltaTime / _pullTimeScalar;
+		float pullValue = _pullCurve.Evaluate(_cachedPullTime); 
+		_pullDist = pullValue;
+	}
+
+	void ReleaseCue(){
+		_cachedReleaseTime += Time.deltaTime/_releaseTimeScalar;
+		float releaseValue = _releaseCurve.Evaluate(_cachedReleaseTime);
+		_pullDist = Mathf.Lerp(_pullDist,0,releaseValue); 
+	}
+
 }
