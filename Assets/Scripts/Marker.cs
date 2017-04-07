@@ -5,7 +5,7 @@ using UnityEngine;
 public class Marker : MonoBehaviour {
 
 	void Update(){
-		transform.position = InputManager.Instance.MarkerPosition;
+		transform.position = RayManager.Instance.MarkerPosition;
 		Debug.DrawRay(transform.position,Vector3.up,Color.blue);
 	}
 	

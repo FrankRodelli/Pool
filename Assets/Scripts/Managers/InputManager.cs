@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class InputManager : Singleton<InputManager> {
 
-	[SerializeField] private LayerMask _markerPlaneMask;
-    [SerializeField] private GameObject _trajectory;
-
-	public Vector3 MarkerPosition { get; private set;}
-
 	public float TriggerDownLength{get; private set;}
 	public bool TriggerDown { get; private set;}
 	public bool OnTriggerUp { get; private set;}
 	public bool OnTriggerDown { get; private set;}
-    public float Distance { get; private set; }
 
 
 	// Unity's native InputManager (Edit>ProjectSettings>Input) has support for different control schemes
@@ -32,23 +26,5 @@ public class InputManager : Singleton<InputManager> {
 		} else {
 			TriggerDownLength = 0;
 		}
-
-		Camera cam = Camera.main;
-		RaycastHit hit;
-		// sends a ray out from the camera
-        if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, _markerPlaneMask)){
-              			
-         	MarkerPosition = hit.point;
-            Debug.DrawLine( cam.transform.position, hit.point, Color.red);
-        }
-
-        RaycastHit hitBall;
-
-        if (Physics.SphereCast(_trajectory.transform.position, .5f, _trajectory.transform.forward, out hitBall, 50))
-        {
-            Distance = hitBall.distance;
-            Debug.DrawLine(_trajectory.transform.position, hitBall.point, Color.red);
-            print(hitBall.collider.gameObject.name);
-        }
     }
 }
