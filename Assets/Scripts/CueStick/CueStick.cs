@@ -45,8 +45,7 @@ public class CueStick : MonoBehaviour {
 	void RotateAroundCueBall(){
 		Vector2 cueballKey = _cueBall.Position.xz(); // see the Vector3Extensions.cs class to know what .xz() does 
 		Vector2 markerKey = InputManager.Instance.MarkerPosition.xz();
-		Vector3 delta = (markerKey - cueballKey).normalized.x_y(0); // see the Vector2Extensions.cs class to know what .x_y() does 
-		transform.forward = delta;
+        transform.forward = (markerKey - cueballKey).normalized.x_y(0);//Shortened this to one line 
 	}
 
 	void SetCuePosition(){

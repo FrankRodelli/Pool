@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputManager : Singleton<InputManager> {
 
 	[SerializeField] private LayerMask _markerPlaneMask;
+    [SerializeField] private GameObject _trajectory;
 
 	public Vector3 MarkerPosition { get; private set;}
 
@@ -12,6 +13,8 @@ public class InputManager : Singleton<InputManager> {
 	public bool TriggerDown { get; private set;}
 	public bool OnTriggerUp { get; private set;}
 	public bool OnTriggerDown { get; private set;}
+    public float Distance { get; private set; }
+
 
 	// Unity's native InputManager (Edit>ProjectSettings>Input) has support for different control schemes
 	// But it is an absolute pain to work with, and doesn't support certain features you may want
@@ -37,7 +40,15 @@ public class InputManager : Singleton<InputManager> {
               			
          	MarkerPosition = hit.point;
             Debug.DrawLine( cam.transform.position, hit.point, Color.red);
-        }		
+        }
 
-	}
+        RaycastHit hitBall;
+
+        if (Physics.SphereCast(_trajectory.transform.position, .5f, _trajectory.transform.forward, out hitBall, 50))
+        {
+            Distance = hitBall.distance;
+            Debug.DrawLine(_trajectory.transform.position, hitBall.point, Color.red);
+            print(hitBall.collider.gameObject.name);
+        }
+    }
 }
