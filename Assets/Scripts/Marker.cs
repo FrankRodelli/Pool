@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Marker : MonoBehaviour {
 
+    [SerializeField] GameObject ray;
+
 	void Update(){
-		transform.position = RayManager.Instance.MarkerPosition;
-		Debug.DrawRay(transform.position,Vector3.up,Color.blue);
+        if (!InputManager.Instance.TriggerDown)
+        {
+            transform.position = ray.GetComponent<RayManager>().MarkerPosition;
+            Debug.DrawRay(transform.position, Vector3.up, Color.blue);
+        }
+
 	}
 	
 }

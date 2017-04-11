@@ -5,9 +5,9 @@ using UnityEngine;
 public class CueStick : MonoBehaviour {
 
 	[SerializeField] private Ball _cueBall;
+    [SerializeField] private GameObject _rayScript;
 	[SerializeField] private float _maxPullDist = 1;
 	[SerializeField] private AnimationCurve _pullCurve;
-	[SerializeField] private float _pullTimeScalar = 1;
 	[SerializeField] private AnimationCurve _releaseCurve;
 	[SerializeField] private float _releaseTimeScalar = 1;
 
@@ -30,7 +30,7 @@ public class CueStick : MonoBehaviour {
     }
 
 	void Update () {
-		if (_cueBall.Velocity.magnitude == 0) {
+		if (_cueBall.Velocity.magnitude == 0 && !InputManager.Instance.TriggerDown) {
             MoveToCueBall();
 			RotateAroundCueBall();
 		}
@@ -44,7 +44,7 @@ public class CueStick : MonoBehaviour {
 
 	void RotateAroundCueBall(){
 		Vector2 cueballKey = _cueBall.Position.xz(); // see the Vector3Extensions.cs class to know what .xz() does 
-		Vector2 markerKey = RayManager.Instance.MarkerPosition.xz();
+		Vector2 markerKey = _rayScript.GetComponent<RayManager>().MarkerPosition.xz();
         transform.forward = (markerKey - cueballKey).normalized.x_y(0);//Shortened this to one line 
 	}
 
@@ -68,13 +68,13 @@ public class CueStick : MonoBehaviour {
 	}
 
 	void PullCue(){
-		_cachedPullTime += Time.deltaTime / _pullTimeScalar;
+		_cachedPullTime += InputManager.Instance.MousePullBack / 10 * -1;
 		float pullValue = _pullCurve.Evaluate(_cachedPullTime); 
 		_pullDist = pullValue;
 	}
 
 	void ReleaseCue(){
-		_cachedReleaseTime += Time.deltaTime/_releaseTimeScalar;
+		_cachedReleaseTime += Time.deltaTime/_releaseTimeScalar * 2;
 		float releaseValue = _releaseCurve.Evaluate(_cachedReleaseTime)*_distAtRelease;
 		//_pullDist = Mathf.Lerp(_pullDist,0,releaseValue); 
 		_pullDist = releaseValue;

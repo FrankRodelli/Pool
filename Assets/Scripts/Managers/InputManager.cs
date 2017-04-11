@@ -8,6 +8,7 @@ public class InputManager : Singleton<InputManager> {
 	public bool TriggerDown { get; private set;}
 	public bool OnTriggerUp { get; private set;}
 	public bool OnTriggerDown { get; private set;}
+    public float MousePullBack { get; private set;}
 
 
 	// Unity's native InputManager (Edit>ProjectSettings>Input) has support for different control schemes
@@ -20,7 +21,7 @@ public class InputManager : Singleton<InputManager> {
 		TriggerDown = Input.GetMouseButton(0) | Input.GetKey(KeyCode.Space);
 		OnTriggerUp = Input.GetMouseButtonUp(0) | Input.GetKey(KeyCode.Space);
 		OnTriggerDown = Input.GetMouseButtonDown(0) | Input.GetKey(KeyCode.Space);
-
+        MousePullBack = Input.GetAxis("Mouse X");
 		if (TriggerDown){
 			TriggerDownLength += Time.deltaTime;
 		} else {
